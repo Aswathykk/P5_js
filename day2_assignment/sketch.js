@@ -233,7 +233,6 @@ function draw() {
   triangle(x1+2, y1+5, x2+13, y2+95, x3+280, y3+290);
     if (waiting) {
     if (millis() - startTime < 3000) {
-     // text("Waiting 20 seconds...", 100, 200);
       return; // Stop here during wait
     } else {
       waiting = false; // Done waiting
@@ -254,7 +253,7 @@ function draw() {
   //triangle(2, 5, mouseX, mouseY, 280, 290);
   //  noStroke();
   if (!Lastcolor) {
-    if (r < maxR) r += 1;   // if (r < maxR) {r = r + 1;}
+    if (r < maxR) r += 1;   
     if (g < maxG) g += 1;
     if (b < maxB) b += 1;
 

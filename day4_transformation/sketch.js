@@ -20,7 +20,7 @@ drawrect();
 //   ellipse(0, 0, 65);
 //   for(let i=0; i<noPetals ; i++){
 //     fill("pink");
-//     ellipse(80, 0 , 100, 50);
+//     ellipse(8  0, 0 , 100, 50);
 //     rotate(360/noPetals);
 //   }
 //   pop();

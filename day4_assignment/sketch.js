@@ -1,4 +1,4 @@
-let img1, img4, img5, img6;
+let img1, img4, img5, img6, noImages = 4, imgArr = [ ];
 let size = 80;
 let graphicsFilter;
 // let pg; 
@@ -16,17 +16,22 @@ const colorModes = [
 let currentColor = 0;
 
 function preload() {
-  g0 = loadImage('images/Illustration20a.jpg');
- //  img2 = loadImage('images/Illustration22a.jpg');
- //  img3 = loadImage('images/Illustration23a.jpg');
-  g1 = loadImage('images/Illustration19a.jpg');
-  g2 = loadImage('images/Illustration23a.jpg');
-  g3 = loadImage('images/Illustration24a.jpg');
+   
+  for (let i = 0; i < noImages; i++) {
+   imgArr[i] = loadImage("images/g"+i+".jpg");
+  }
+
+//   g0 = loadImage('images/Illustration20a.jpg');
+//  //  img2 = loadImage('images/Illustration22a.jpg');
+//  //  img3 = loadImage('images/Illustration23a.jpg');
+//   g1 = loadImage('images/Illustration19a.jpg');
+//   g2 = loadImage('images/Illustration23a.jpg');
+//   g3 = loadImage('images/Illustration24a.jpg');
 }
 
 function setup() {
-  createCanvas(1000, 1000);
-  graphicsFilter = createGraphics(width, height);
+  createCanvas(innerWidth, innerHeight);
+  graphicsFilter = createGraphics(innerWidth, innerHeight);
   noLoop();
   rebuildMosaic(); // initial grid
   //nostroke();
@@ -46,20 +51,16 @@ function draw() {
 
 // Build a fresh random mosaic into the offscreen buffer and grayscale it
 function rebuildMosaic() {
-  const imgs = [img1, img4, img5, img6];
+
 
   graphicsFilter.push();
   graphicsFilter.background(220);
 
-  for (let x = 0; x < width; x += size) {
-    for (let y = 0; y < height; y += size) {
-       r = floor(random(0,100));
-      let img =                      
-         (r < 15) ? g0 :
-         (r < 30) ? g1 :
-         (r < 45) ? g2 : g3;
+  for (let i = 0; i < width; i += size) {
+    for (let j = 0; j < height; j += size) {
+      let r = floor(random(0,noImages));
 
-      graphicsFilter.image(img, x, y, size, size);
+      graphicsFilter.image(imgArr[r], i, j, size, size);
     }
   }
 

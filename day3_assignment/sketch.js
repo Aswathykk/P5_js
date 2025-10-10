@@ -3,7 +3,7 @@ let size = 80;
 let graphicsFilter;
 // let pg; 
 
-const colorModes = [
+let colorModes = [
   { name: 'Red',    rgb: [255, 0,   0  ] },
   { name: 'Yellow', rgb: [255, 255, 0  ] },
   { name: 'Green',  rgb: [0,   255, 0  ] },
@@ -46,7 +46,7 @@ function draw() {
 
 // Build a fresh random mosaic into the offscreen buffer and grayscale it
 function rebuildMosaic() {
-  const imgs = [img1, img4, img5, img6];
+  let imgs = [img1, img4, img5, img6];
 
   graphicsFilter.push();
   graphicsFilter.background(220);
