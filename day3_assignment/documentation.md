@@ -41,3 +41,11 @@ every time we click the mose, the pattern is changed randomly and the color tint
    - tint() gives the mosaic a color filter
    - image(graphicsFilter, 0, 0, width, height); draws the offscreen created in to the main canvas
    - graphicsFilter.filter(GRAY); turns the entire offscreen canvas to black and white(adde blue color in the image but with that in color change it was not working peoprly so added like this)
+
+   /////////issues faced////////
+   -- initilly didnt know what was the logic behind continuous patterns, then realized if we keep all the edge connections same it will work
+   -- it took some time for ideation
+   -- gave blue color to the patterns, but with color change was not working properly so grayed it out
+
+   /////////////////future/////////
+   --would like to add some more monsters and color variations

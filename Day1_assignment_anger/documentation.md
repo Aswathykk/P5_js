@@ -8,4 +8,6 @@ representing an emotion
 --strokeWeight(10) for increasing the stroke weight
 --line(x1, y1, x2, y2)
 --fill("rgb(179,25,25)")
-
+////////////////////facsed issues//////////
+-- it was little bit difficult to arrange the triangles in order
+-- initillay thought of creating mirroring pattern but faced alignent issues, so came up with this

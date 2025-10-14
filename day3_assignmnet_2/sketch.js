@@ -9,8 +9,8 @@ function setup() {
 function draw() {
   background(20, 30, 60); 
   // which tile the mouse is over
-  const col = floor(mouseX / size);
-  const row = floor(mouseY / size);
+   col = floor(mouseX / size);
+   row = floor(mouseY / size);
 
   for (let i = 0; i < width; i += size) {
     for (let j = 0; j < height; j += size) {

@@ -14,3 +14,10 @@ Declared vaiable size and array colorArray and added the colors ["red", "blue", 
 -- floor is given so that the selected random no, if its decimal , it will take the loower boundary integer value
 -- to fill the rect grid  the color array is taken, based on the choice it will take colors from the array based on index
 --to create rect the coordinates and size is given
+
+//////issues////
+-- didnt face any issue since in class it was already discussed
+
+/////future////
+-- would like to make it more aesthetic and would like to add some more elements
+-- would like to try this with flower pattern

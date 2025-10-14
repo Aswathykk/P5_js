@@ -43,3 +43,13 @@ triangle(x1+8, y1+5, x2+70, y2+10, x3+280, y3+280);
    - millis() gives the number of milliseconds since the program started
    - millis() - startTime  will give how much time has passed and if its less that 3s if condition will satisfy and will return, skipping the below parts
    
+
+   ///////////////////issues faced////////////////
+   --initally the anger image was falling apart very fastly, so to keep it in the screen for some seconds found the function millis()
+   -- the trasnition from anger to love, was not sure how to do
+   -- the heart for love is created by using ellipse and canvas roatation, didnt know that it will be in radians by default. so faced issue with alighnment, and vbecause of this alligned each of them manually changing bit by bit
+
+////////////////Future////////
+-- would like to make the transition more smoother
+-- would like to try make use of the negative sound
+-- adding sound
