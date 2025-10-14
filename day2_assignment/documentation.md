@@ -1,6 +1,6 @@
 ///////////Anger to Love/////////
 --changing the emotion from anger to love.
---chnaged by making the red triangles move out of the screen and then changing the background color to pink, then showing a heart.
+--changed by making the red triangles move out of the screen and then changing the background color to pink, then showing a heart.
 -- the draw function will execute 60fps. so movement of the triangles are showing by using that. added varibles x1, x2, x3, y1, y2, y3,z1, z2,z3,t1, t2, t3 and these are incremented at the end of the draw function. indise triangle these variables are used
 example,
 triangle(x1+8, y1+5, x2+70, y2+10, x3+280, y3+280);
