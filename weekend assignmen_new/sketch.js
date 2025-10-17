@@ -466,7 +466,7 @@ function showCityScene() {
   textSize(40);
   fill(255);
   textSize(20);
-  text("Nothing can pull me out of this", width / 2, height - 100);
+  text("Nothing can pull me out of this...", width / 2, height - 100);
   }
   else if(millis() - cityStartTime > 5000)
   {
