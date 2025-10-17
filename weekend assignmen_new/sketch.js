@@ -493,9 +493,9 @@ function showCityScene() {
 }
 ////////////////////////////////////////////////////////////////////////
 function headphonePop() {
-  let scaleFactor = 0.8; // scale down
-  let imgW = headphoneImage.width * scaleFactor;
-  let imgH = headphoneImage.height * scaleFactor;
+  let scaleamt = 0.8; // scale down
+  let imgW = headphoneImage.width * scaleamt;
+  let imgH = headphoneImage.height * scaleamt;
   image(headphoneImage, width / 2, height / 2, imgW, imgH);
  // console.log("width and height",width,height); // added for locating height - 738 and width - 1127
 }
