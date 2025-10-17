@@ -1,0 +1,1 @@
+let flowerMax = 0;  kept this variable inside function it wasnot working so n=then update dto constructore

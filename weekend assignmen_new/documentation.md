@@ -8,7 +8,7 @@ for each action different functions are created and nested for loops and if cond
 /////////////Issues/////////
 -- faced issues relate dto connecting all secenes did for 4, 5 times and some bug fix with ai tools then it worked
 -- for city animation got some code from git hub and trried integrating that, but faced issues while inegrating
-
+-- named assets as assests then checked for 30 to 1hr
 ///////future////
 - wuld like to add some more story
 - this was created as  prototype , so would like to make it better

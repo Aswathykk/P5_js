@@ -1,5 +1,6 @@
 let x, y;
 let speed1 = 7, speed2 = 1;
+let updated = false;
 
 // wall1
 let sq1Xleft, sq1Yleft, sq1Xtop, sq1Ytop, sq1Xright, sq1Yright, sq1Xlow, sq1Ylow;
@@ -81,11 +82,13 @@ function movingSquare() {
   let bottomLimit= sq1Ylow + 65;
 
   // Expand limits if flag > 3
-  if (sq1Flag > 3) {
+  if (sq1Flag > 3 && updated == false) {
     leftLimit  -= 45;
     rightLimit += 45;
     topLimit   -= 45;
+    print(topLimit)
     bottomLimit+= 45;
+    updated = true;
   }
 ///////////////collision logic by chatgpt until line 98
   // Use leftLimit for touch detection
@@ -135,6 +138,7 @@ function movingSquare() {
   if (keyIsDown(UP_ARROW)) {
     let nextY = y - speed1;
     if (nextY < topLimit) {
+      console.log("hi")
       y += 70;
     } else {
       y -= speed2;
