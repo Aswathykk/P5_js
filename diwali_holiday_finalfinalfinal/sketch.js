@@ -347,6 +347,10 @@ if (showEndImage) {
 
 ////SCENE1//////////////
 function firstScene(){
+
+  sceneText = "";  // reset scene text at start
+handleSceneEvents(currentScene);  // ensure the correct scene text is set
+
    // 1 — FINAL IMAGE OVERRIDE
     if (showFinalImage2) {
         drawImageFullScreen(finalImage2);
@@ -877,6 +881,9 @@ if (!grandmaStopped) {
 
 function goToPreviousScene() {
 
+sceneText = "";  // reset scene text at start
+handleSceneEvents(currentScene);  // ensure the correct scene text is set
+
   currentScene--;
 
   if (currentScene < 0) {
@@ -913,11 +920,29 @@ function handleSceneEvents(sceneIndex) {
         breathingPlayed5 = false;
          return;   
       }
+
+      sceneText = "";  // reset for every scene
+
+          // Reset all breathing flags first
+    breathingPlayed = false;
+    breathingPlayed1 = false;
+    breathingPlayed2 = false;
+    breathingPlayed3 = false;
+    breathingPlayed4 = false;
+    breathingPlayed5 = false;
+
+    // Reset all breathing sounds
+    if (breathing && breathing.isPlaying()) breathing.stop();
+    if (breathing1 && breathing1.isPlaying()) breathing1.stop();
+    if (breathing2 && breathing2.isPlaying()) breathing2.stop();
+    if (breathing3 && breathing3.isPlaying()) breathing3.stop();
+    if (breathing4 && breathing4.isPlaying()) breathing4.stop();
+    if (breathing5 && breathing5.isPlaying()) breathing5.stop();
         
   switch(sceneIndex) {
 
     case 0:
-      sceneText = "";
+      sceneText = "  ...   ";
       // stop breathing when leaving scene 1
       if (breathing && breathing.isPlaying()) breathing.stop();
       breathingPlayed = false;
