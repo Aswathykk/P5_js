@@ -198,7 +198,8 @@ function setup() {
   textSize(40);
   fill(255);
 
-  girlY = height / 2+145+50;
+  // girlY = height / 2+145+50;
+  girlY = height * 0.75; 
   // sprite size
   spriteW = girlSpriteSheet.width / spriteCols;
   spriteH = girlSpriteSheet.height / spriteRows;
@@ -387,8 +388,10 @@ if (inTogetherMode) {
 
       let boxW = 200*0.8;
     let boxH = 100*0.8;
-    let boxX = bgRightX - boxW / 2-150;
-    let boxY = girlY - 100+150;
+    // let boxX = bgRightX - boxW / 2-150;
+    // let boxY = girlY - 100+150;
+    let boxX = bgRightX - boxW*0.5 - width*0.05;  // 5% padding from right
+let boxY = girlY*1.1 - height*0.00001;                
 
         // Draw bench inside the box 
     if (benchImg) {
@@ -446,7 +449,7 @@ if (inTogetherMode) {
     text(
         "don't worry.\nThese old legs shake a little,\nbut I am alright.\nYou came back… and that is enough for me.",
         width / 2,
-        height - 120
+        height*0.8
     );
 
       // After 5 seconds → switch to merged mode
@@ -539,8 +542,10 @@ if (currentScene === 5) {
 
         let boxW = 200*0.8;
     let boxH = 100*0.8;
-    let boxX = bgRightX - boxW / 2-150;
-    let boxY = girlY - 100+150;
+    // let boxX = bgRightX - boxW / 2-150;
+    // let boxY = girlY - 100+150;
+        let boxX = bgRightX - boxW*0.5 - width*0.05;  // 5% padding from right
+let boxY = girlY*1.1 - height*0.00001;  
  
     // bench inside the rectangle
 if (benchImg) {
@@ -924,20 +929,20 @@ function handleSceneEvents(sceneIndex) {
       sceneText = "";  // reset for every scene
 
           // Reset all breathing flags first
-    breathingPlayed = false;
-    breathingPlayed1 = false;
-    breathingPlayed2 = false;
-    breathingPlayed3 = false;
-    breathingPlayed4 = false;
-    breathingPlayed5 = false;
+    // breathingPlayed = false;
+    // breathingPlayed1 = false;
+    // breathingPlayed2 = false;
+    // breathingPlayed3 = false;
+    // breathingPlayed4 = false;
+    // breathingPlayed5 = false;
 
-    // Reset all breathing sounds
-    if (breathing && breathing.isPlaying()) breathing.stop();
-    if (breathing1 && breathing1.isPlaying()) breathing1.stop();
-    if (breathing2 && breathing2.isPlaying()) breathing2.stop();
-    if (breathing3 && breathing3.isPlaying()) breathing3.stop();
-    if (breathing4 && breathing4.isPlaying()) breathing4.stop();
-    if (breathing5 && breathing5.isPlaying()) breathing5.stop();
+    // // Reset all breathing sounds
+    // if (breathing && breathing.isPlaying()) breathing.stop();
+    // if (breathing1 && breathing1.isPlaying()) breathing1.stop();
+    // if (breathing2 && breathing2.isPlaying()) breathing2.stop();
+    // if (breathing3 && breathing3.isPlaying()) breathing3.stop();
+    // if (breathing4 && breathing4.isPlaying()) breathing4.stop();
+    // if (breathing5 && breathing5.isPlaying()) breathing5.stop();
         
   switch(sceneIndex) {
 
@@ -1093,6 +1098,7 @@ function drawImageFullScreen(img) {
   let canvasRatio = width / height;
   let drawWidth, drawHeight;
 
+  // scale proportionally
   if (canvasRatio > imgRatio) {
     drawHeight = height;
     drawWidth = drawHeight * imgRatio;
@@ -1101,15 +1107,16 @@ function drawImageFullScreen(img) {
     drawHeight = drawWidth / imgRatio;
   }
 
-  //Store the bounds ONLY when drawing bg1
- if (img === bgImages[currentScene]) 
-{
+  // center image
+  image(img, width / 2, height / 2, drawWidth, drawHeight);
+
+  // store background bounds for sprite movement
+  if (bgImages.includes(img)) {
     bgLeftX = width / 2 - drawWidth / 2;
     bgRightX = width / 2 + drawWidth / 2;
   }
-
-  image(img, width / 2, height / 2, drawWidth, drawHeight);
 }
+
 
 function girlAndGrandmaTouching() {
   return abs(girlX - grandmaX) < 40;   
