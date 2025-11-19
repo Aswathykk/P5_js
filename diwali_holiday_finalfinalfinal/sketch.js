@@ -1,5 +1,6 @@
 let started = false; // started or not
 let intro;
+let start;
 
 ////Intro-stick////
 let stick = [];
@@ -1358,7 +1359,7 @@ if (girlGrandmaDist < 20) {
 }
 
 
-    // Grandma is tired (row 1) AND girl is still in same scene
+    // Grandma is tired (row 1) AND girl is still in same scene...
     if (grandmaRow === 1 && currentScene === faceTriggerScene) {
         if (!coughSound.isPlaying()) {
             coughSound.setVolume(0.4);
