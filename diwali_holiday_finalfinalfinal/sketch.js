@@ -123,6 +123,9 @@ let coughDisabledForever = false;
 let fireworksSound;
 
 let sceneText = "";
+let sceneTextWithGrandma = "";  // text when grandma is in the same scene
+
+let lastHandledScene = -1; // track which scene we've applied events for
 
 
 // Cough variables
@@ -144,6 +147,8 @@ let breathing4;
 let breathingPlayed4 = false;
 let breathing5;
 let breathingPlayed5 = false;
+
+
 
 ////////////IMAGE LOADING////////////
 function preload() {
@@ -227,9 +232,42 @@ togetherH = togetherG.height / togetherRows;
 ////////DRAW///////////
 function draw() {
   handleCoughLoop();
+    // ----- SILENCE SOUNDS DURING FINAL/TOGETHER MODES -----
+  // place right after handleCoughLoop() at the top of draw()
+  if (inTogetherMode || showFinalImage || showEndImage || showFinalImage2 || endSequence || inFinalBackgMode) {
+    // stop cough and prevent its restart via handleCoughLoop
+    if (coughSound && coughSound.isPlaying()) coughSound.stop();
+    coughDisabledForever = true;
+
+    // stop all breathing sounds and mark them "played" so they won't restart
+    if (breathing && breathing.isPlaying()) breathing.stop();
+    if (breathing1 && breathing1.isPlaying()) breathing1.stop();
+    if (breathing2 && breathing2.isPlaying()) breathing2.stop();
+    if (breathing3 && breathing3.isPlaying()) breathing3.stop();
+    if (breathing4 && breathing4.isPlaying()) breathing4.stop();
+    if (breathing5 && breathing5.isPlaying()) breathing5.stop();
+
+    breathingPlayed = breathingPlayed1 = breathingPlayed2 =
+      breathingPlayed3 = breathingPlayed4 = breathingPlayed5 = true;
+  }
+
   // If happy ending is forced → ignore sad ending
 if (forceHappyEnding) {
     showEndImage = false;    // disable sad ending
+    // after setting showFinalImage = true; or showEndImage = true;
+if (coughSound && coughSound.isPlaying()) coughSound.stop();
+coughDisabledForever = true;
+
+if (breathing && breathing.isPlaying()) breathing.stop();
+if (breathing1 && breathing1.isPlaying()) breathing1.stop();
+if (breathing2 && breathing2.isPlaying()) breathing2.stop();
+if (breathing3 && breathing3.isPlaying()) breathing3.stop();
+if (breathing4 && breathing4.isPlaying()) breathing4.stop();
+if (breathing5 && breathing5.isPlaying()) breathing5.stop();
+
+breathingPlayed = breathingPlayed1 = breathingPlayed2 =
+  breathingPlayed3 = breathingPlayed4 = breathingPlayed5 = true;
+
 }
 
   // Final image override (together mode)
@@ -349,9 +387,15 @@ if (showEndImage) {
 ////SCENE1//////////////
 function firstScene(){
 
-  sceneText = "";  // reset scene text at start
-handleSceneEvents(currentScene);  // ensure the correct scene text is set
-
+ 
+ // Only apply scene events once when scene changes — prevents audio thrash.
+  if (lastHandledScene !== currentScene) {
+     // reset text when the scene actually changes
+    sceneText = "";
+    sceneTextWithGrandma = "";
+    handleSceneEvents(currentScene);
+    lastHandledScene = currentScene;
+  }
    // 1 — FINAL IMAGE OVERRIDE
     if (showFinalImage2) {
         drawImageFullScreen(finalImage2);
@@ -461,13 +505,24 @@ let boxY = girlY*1.1 - height*0.00001;
   }
 
  drawSceneBackground();// background
- if (sceneText !== "") {
-    textFont("Georgia");
-    textSize(25);
-    fill(255);
-    noStroke();
-    text(sceneText, width/2, height - 70);
+
+// Decide which text to show:
+// - girl alone -> sceneText
+// - girl + grandma in same scene (and she hasn't been left behind) -> sceneTextWithGrandma
+let textToShow = sceneText;
+
+if (grandmaScene === currentScene && !grandmaStopped && sceneTextWithGrandma !== "") {
+  textToShow = sceneTextWithGrandma;
 }
+
+if (textToShow !== "") {
+  textFont("Georgia");
+  textSize(25);
+  fill(255);
+  noStroke();
+  text(textToShow, width/2, height - 70);
+}
+
 
  // Set correct initial x inside bg
  let startX = bgLeftX + (grandmaW * spriteScale) / 2;
@@ -905,6 +960,25 @@ handleSceneEvents(currentScene);  // ensure the correct scene text is set
 }
 
 function handleSceneEvents(sceneIndex) {
+
+  // prevent any breathing sounds while the "together" sprite/mode or final screens are active
+if (inTogetherMode || showFinalImage || showEndImage || showFinalImage2 || endSequence || inFinalBackgMode) {
+  // stop any playing breathing sounds
+  if (breathing && breathing.isPlaying()) breathing.stop();
+  if (breathing1 && breathing1.isPlaying()) breathing1.stop();
+  if (breathing2 && breathing2.isPlaying()) breathing2.stop();
+  if (breathing3 && breathing3.isPlaying()) breathing3.stop();
+  if (breathing4 && breathing4.isPlaying()) breathing4.stop();
+  if (breathing5 && breathing5.isPlaying()) breathing5.stop();
+
+  // mark them "played" so the rest of the handler won't restart them while these modes are active
+  breathingPlayed = breathingPlayed1 = breathingPlayed2 =
+    breathingPlayed3 = breathingPlayed4 = breathingPlayed5 = true;
+
+  return; // skip the rest of scene audio logic while quiet modes are on
+}
+
+
    if (grandmaScene === sceneIndex) {
         if (breathing && breathing.isPlaying()) breathing.stop();
         breathingPlayed = false;
@@ -923,11 +997,12 @@ function handleSceneEvents(sceneIndex) {
 
         if (breathing5 && breathing5.isPlaying()) breathing5.stop();
         breathingPlayed5 = false;
-         return;   
+        // return;   
       }
 
       sceneText = "";  // reset for every scene
 
+       sceneTextWithGrandma = ""; 
           // Reset all breathing flags first
     // breathingPlayed = false;
     // breathingPlayed1 = false;
@@ -948,6 +1023,8 @@ function handleSceneEvents(sceneIndex) {
 
     case 0:
       sceneText = "  ...   ";
+       sceneTextWithGrandma = "There is no hurry, Grandma...\nI will match my little steps to yours.";
+     
       // stop breathing when leaving scene 1
       if (breathing && breathing.isPlaying()) breathing.stop();
       breathingPlayed = false;
@@ -963,6 +1040,8 @@ function handleSceneEvents(sceneIndex) {
 
     case 1:
        sceneText = "That night you cried in fever,\nI stayed awake.\nI always will.";
+      sceneTextWithGrandma = "That night you stayed up for me…\nI still remember.";
+      
        if (breathing1 && breathing1.isPlaying()) breathing1.stop();
       breathingPlayed1 = false;
       if (breathing4 && breathing4.isPlaying()) breathing4.stop();
@@ -983,7 +1062,8 @@ function handleSceneEvents(sceneIndex) {
 
     case 2:
       sceneText = "Eat a little more,\nyour tummy shouldn not stay empty.";
-       
+        sceneTextWithGrandma = "I didn not cherish it then,\nbut now I miss the way you fed me, Grandma...";
+      
       if (breathing && breathing.isPlaying()) breathing.stop();
       breathingPlayed = false;
       if (breathing4 && breathing4.isPlaying()) breathing4.stop();
@@ -1004,7 +1084,8 @@ function handleSceneEvents(sceneIndex) {
     case 3:
 
     sceneText = "You learned your first words on my lap,\nI knew you would fly far.";
-       
+      sceneTextWithGrandma = "I learned to read on your lap…\nmaybe that is why words still feel warm";
+        
       if (breathing && breathing.isPlaying()) breathing.stop();
       breathingPlayed = false;
       if (breathing1 && breathing1.isPlaying()) breathing1.stop();
@@ -1024,7 +1105,8 @@ function handleSceneEvents(sceneIndex) {
 
     case 4:
       sceneText = "let me oil your hair.\nIt is the only way these old hands still feel useful.";
-       
+        sceneTextWithGrandma = "Your touch always calmed me…\nmore than you realised.";
+      
       if (breathing && breathing.isPlaying()) breathing.stop();
       breathingPlayed = false;
       if (breathing1 && breathing1.isPlaying()) breathing1.stop();
@@ -1044,7 +1126,10 @@ function handleSceneEvents(sceneIndex) {
 
     case 5:
       sceneText = "Live your life,\nbut remember,\nI will always wait at home for you.";
-      
+       sceneTextWithGrandma = "Even when I forgot… you waited\nCome, Grandma..let’s sit there.";
+            if (grandmaScene === 5 && !grandmaStopped) {
+        sceneText = sceneTextWithGrandma;
+      }
       if (breathing && breathing.isPlaying()) breathing.stop();
       breathingPlayed = false;
       if (breathing1 && breathing1.isPlaying()) breathing1.stop();
@@ -1188,6 +1273,20 @@ if (currentScene === 5 &&
         // SAD ENDING (girl alone)
         if (!showEndImage) {
             showEndImage = true;      // show finalimagefinal
+            // after setting showFinalImage = true; or showEndImage = true;
+if (coughSound && coughSound.isPlaying()) coughSound.stop();
+coughDisabledForever = true;
+
+if (breathing && breathing.isPlaying()) breathing.stop();
+if (breathing1 && breathing1.isPlaying()) breathing1.stop();
+if (breathing2 && breathing2.isPlaying()) breathing2.stop();
+if (breathing3 && breathing3.isPlaying()) breathing3.stop();
+if (breathing4 && breathing4.isPlaying()) breathing4.stop();
+if (breathing5 && breathing5.isPlaying()) breathing5.stop();
+
+breathingPlayed = breathingPlayed1 = breathingPlayed2 =
+  breathingPlayed3 = breathingPlayed4 = breathingPlayed5 = true;
+
             return;
         }
     }
