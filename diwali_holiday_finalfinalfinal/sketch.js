@@ -798,7 +798,7 @@ function updateGrandmaMovement() {
     }
 
     // CASE 3: too far → STOP but animate row 1
-    else if (distG > 250) {
+    else if (distG > 350) {
     grandmaRow = 1;
     grandmaStopped = true;
 

@@ -97,7 +97,7 @@ function setup() {
     }
   }
 
-  // Road boundary
+  // Road boundary....................................................
   let roadRatio = road.width / road.height; //road img aspect ratio 
   //if the canvas is wider --> roadheight is same as the current height, if diff calculate it with aspect ratio
   if (width / height > roadRatio) 
@@ -125,8 +125,8 @@ function draw() {
     text("GOING HOME", width / 2, height / 2);
     textSize(20);
     text("Click to start", width / 2, height / 2 + 50);
-    textSize(20);
-    text("Press right arrow for movement", width / 2, height / 2 + 80);
+    // textSize(20);
+    // text("Press right arrow for movement", width / 2, height / 2 + 80);
     return;
   }
 
@@ -475,8 +475,8 @@ function showCityScene() {
   if(headphoneStart && !wearingHeadphone)
   {
   headphonePop();
-  textSize(15);
-  text("Click the earphone to put it on", width/2 - 250, height- 50);
+  // textSize(15);
+  // text("Click the earphone to put it on", width/2 - 250, height- 50);
   }
   else if(wearingHeadphone)
   {

@@ -43,19 +43,19 @@ class Flower{
             this.xSpeed = -this.xSpeed;
         }
     }
-    // swayFlower(){
-    //  let d = dist(mouseX, mouseY, this.x, this.y);
-    // if (d < 30) {
-    //   this.swayCurrent += this.swayDirection * 4; 
+    swayFlower(){
+     let d = dist(mouseX, mouseY, this.x, this.y);
+    if (d < 30) {
+      this.swayCurrent += this.swayDirection * 4; 
 
-    // if (this.swayCurrent > this.swayDistance || this.swayCurrent < -this.swayDistance) {
-    //     this.swayDirection *= -1; 
-    //   }
+    if (this.swayCurrent > this.swayDistance || this.swayCurrent < -this.swayDistance) {
+        this.swayDirection *= -1; 
+      }
 
-    // } else {
-    //   this.swayCurrent *= 0.9;
-    // }
-    // }
+    } else {
+      this.swayCurrent *= 0.9;
+    }
+    }
  
 
     growFlower(){
